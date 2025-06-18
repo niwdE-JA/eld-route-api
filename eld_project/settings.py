@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
-    'eld_project.trip_planner',
+    'trip_planner',
 ]
 
 MIDDLEWARE = [
