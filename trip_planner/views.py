@@ -184,8 +184,8 @@ def calculate_route_view(request):
     ]
 
     mockData = {
-        'mockRoute' : mockRoute,
-        'mockLogSheets' : mockLogSheets
+        'route' : route,
+        'logSheets' : logSheets
     }
 
     return Response(mockData)
