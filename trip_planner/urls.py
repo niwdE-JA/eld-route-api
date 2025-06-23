@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     TripCreateView, TripDetailView, TripListView,
-    RouteSegmentsView, ELDLogsView, ELDLogSheetView, TripSummaryView
+    RouteSegmentsView, ELDLogsView, ELDLogSheetView, TripSummaryView, CalculateRouteView, calculate_route_view
 )
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
     # ELD logs
     path('trips/<uuid:trip_id>/logs/', ELDLogsView.as_view(), name='eld-logs'),
     path('trips/<uuid:trip_id>/log-sheets/', ELDLogSheetView.as_view(), name='eld-log-sheets'),
+    path('route/calculate/', calculate_route_view, name='calculate-route')
 ]

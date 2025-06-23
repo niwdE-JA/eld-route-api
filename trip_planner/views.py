@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
@@ -127,3 +128,68 @@ class TripSummaryView(APIView):
         }
         
         return Response(summary)
+
+class CalculateRouteView(generics.ListAPIView):
+    serializer_class = ELDLogSerializer
+
+    def get_queryset(self):
+        mockData = [{}]
+        return Response(mockData)
+
+@api_view(['GET'])
+def calculate_route_view(request):
+    mockRoute = {
+      'totalDistance': 1250,
+      'totalTime': 18.5,
+      'waypoints': [
+        { 'name': 'Current Location', 'lat': 40.7128, 'lng': -74.0060, 'type': 'start' },
+        { 'name': 'Fuel Stop - TA Travel Center', 'lat': 41.4993, 'lng': -81.6944, 'type': 'fuel', 'estimatedArrival': '2024-06-15T10:30:00' },
+        { 'name': 'Pickup Location', 'lat': 41.8781, 'lng': -87.6298, 'type': 'pickup', 'estimatedArrival': '2024-06-15T14:00:00' },
+        { 'name': 'Mandatory Rest Area', 'lat': 41.2524, 'lng': -95.9980, 'type': 'rest', 'estimatedArrival': '2024-06-15T22:00:00' },
+        { 'name': 'Fuel Stop - Pilot Flying J', 'lat': 39.7391, 'lng': -104.9847, 'type': 'fuel', 'estimatedArrival': '2024-06-16T08:00:00' },
+        { 'name': 'Dropoff Location', 'lat': 37.7749, 'lng': -122.4194, 'type': 'dropoff', 'estimatedArrival': '2024-06-16T16:30:00' }
+      ],
+      'fuelStops': 2,
+      'restPeriods': [
+        { 'start': '2024-06-15T22:00:00', 'end': '2024-06-16T08:00:00', 'duration': 10, 'type': '34-hour reset' }
+      ]
+    }
+    
+    mockLogSheets = [
+      {
+        'date': '2024-06-15',
+        'drivingTime': 8,
+        'onDutyTime': 10,
+        'restTime': 14,
+        'violations': [],
+        'entries': [
+          { 'time': '06:00', 'status': 'off-duty', 'location': 'Current Location' },
+          { 'time': '08:00', 'status': 'on-duty', 'location': 'Pre-trip inspection' },
+          { 'time': '09:00', 'status': 'driving', 'location': 'En route to pickup' },
+          { 'time': '14:00', 'status': 'on-duty', 'location': 'Pickup - Loading' },
+          { 'time': '15:00', 'status': 'driving', 'location': 'En route to delivery' },
+          { 'time': '22:00', 'status': 'off-duty', 'location': 'Rest area - Mandatory rest' }
+        ]
+      },
+      {
+        'date': '2024-06-16',
+        'drivingTime': 6.5,
+        'onDutyTime': 8.5,
+        'restTime': 15.5,
+        'violations': [],
+        'entries': [
+          { 'time': '08:00', 'status': 'off-duty', 'location': 'Rest area' },
+          { 'time': '08:30', 'status': 'on-duty', 'location': 'Pre-trip inspection' },
+          { 'time': '09:00', 'status': 'driving', 'location': 'En route to delivery' },
+          { 'time': '15:30', 'status': 'on-duty', 'location': 'Delivery - Unloading' },
+          { 'time': '16:30', 'status': 'off-duty', 'location': 'Delivery complete' }
+        ]
+      }
+    ]
+
+    mockData = {
+        'mockRoute' : mockRoute,
+        'mockLogSheets' : mockLogSheets
+    }
+
+    return Response(mockData)
