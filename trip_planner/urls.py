@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     TripCreateView, TripDetailView, TripListView,
-    RouteSegmentsView, ELDLogsView, ELDLogSheetView, TripSummaryView, CalculateRouteView, calculate_route_view
+    RouteSegmentsView, ELDLogsView, ELDLogSheetView, TripSummaryView,  calculate_route_view
 )
 
 urlpatterns = [

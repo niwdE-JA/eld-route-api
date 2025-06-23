@@ -129,15 +129,11 @@ class TripSummaryView(APIView):
         
         return Response(summary)
 
-class CalculateRouteView(generics.ListAPIView):
-    serializer_class = ELDLogSerializer
 
-    def get_queryset(self):
-        mockData = [{}]
-        return Response(mockData)
-
+# added this route as a temporary fix, pending maps api access
 @api_view(['GET'])
 def calculate_route_view(request):
+    # to be ideally retrieve using google's geocoder apis
     mockRoute = {
       'totalDistance': 1250,
       'totalTime': 18.5,
