@@ -134,7 +134,7 @@ class TripSummaryView(APIView):
 @api_view(['GET'])
 def calculate_route_view(request):
     # to be ideally retrieve using google's geocoder apis
-    mockRoute = {
+    route = {
       'totalDistance': 1250,
       'totalTime': 18.5,
       'waypoints': [
@@ -151,7 +151,7 @@ def calculate_route_view(request):
       ]
     }
     
-    mockLogSheets = [
+    logSheets = [
       {
         'date': '2024-06-15',
         'drivingTime': 8,
